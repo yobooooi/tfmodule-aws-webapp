@@ -8,13 +8,13 @@ resource "aws_iam_role" "ec2_instance_role" {
     assume_role_policy = "${data.aws_iam_policy_document.ec2_instance_policy.json}"
 }
 
-data "aws_iam_policy_document" "ec2_instance_policy" {
-    statement {
-        actions = ["sts:AssumeRole"]
+resource "aws_iam_policy" "efs_mount_policy" {
+    name        = "efs_mount_policy"
+    description = "Allow EC2 instance to mount efs share"
+    policy      = "${data.template_file.efs_mount_permissions_policy.rendered}"
+}
 
-        principals {
-            type        = "Service"
-            identifiers = ["ec2.amazonaws.com"]
-        }
-    }
+resource "aws_iam_role_policy_attachment" "test-attach" {
+    role       = "${aws_iam_role.ec2_instance_role.name}"
+    policy_arn = "${aws_iam_policy.efs_mount_policy.arn}"
 }
