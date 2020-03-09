@@ -1,8 +1,8 @@
 resource "aws_launch_configuration" "wordpress_ec2" {
-    name                 = "wordpress-ec2-instance-launch-configuration"
     image_id             = "${var.ec2_ami}"
     instance_type        = "${var.ec2_instance_type}"
     iam_instance_profile = "${aws_iam_instance_profile.ec2_instance_profile.id}"
+    key_name             = "${var.key_name}"
 
     root_block_device {
         volume_type           = "standard"

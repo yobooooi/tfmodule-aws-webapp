@@ -18,3 +18,8 @@ variable "data_subnet" {
 variable "ec2_ami" {
     description = ""
 }
+
+variable "key_name" {
+    description = ""
+    default     = "wordpress-ec2" 
+}
