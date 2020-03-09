@@ -28,6 +28,7 @@ resource "aws_autoscaling_group" "wordpress_ec2_autoscaling_group" {
     vpc_zone_identifier  = "${var.app_subnet}"
     launch_configuration = "${aws_launch_configuration.wordpress_ec2.name}"
     health_check_type    = "EC2"
+    target_group_arns    = ["${aws_lb_target_group.wordpress-tg.arn}"]
 }
 
 

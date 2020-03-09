@@ -11,3 +11,6 @@ sudo yum-config-manager --enable remi-php56
 sudo yum -y install httpd php php-mysql php-gd openssl psmisc tar
 sudo yum -y install amazon-efs-utils
 sudo yum -y clean all
+
+sudo systemctl start httpd
+sudo systemctl enable httpd
