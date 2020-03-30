@@ -1,15 +1,15 @@
 resource "aws_iam_instance_profile" "ec2_instance_profile" {
-    name = "e2s-instance-profile"
+    name = "iam-instance-profile-${var.buen}-${var.environment}-${var.application}"
     role = "${aws_iam_role.ec2_instance_role.name}"
 }
 
 resource "aws_iam_role" "ec2_instance_role" {
-    name               = "ec2-instance-role"
+    name               = "ec2-role-${var.buen}-${var.environment}-${var.application}"
     assume_role_policy = "${data.aws_iam_policy_document.ec2_instance_policy.json}"
 }
 
 resource "aws_iam_policy" "efs_mount_policy" {
-    name        = "efs_mount_policy"
+    name        = "policy-efs-${var.buen}-${var.environment}-${var.application}"
     description = "Allow EC2 instance to mount efs share"
     policy      = "${data.template_file.efs_mount_permissions_policy.rendered}"
 }

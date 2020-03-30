@@ -1,8 +1,8 @@
 resource "aws_efs_file_system" "wordpress-demo-efs" {
-    creation_token = "wordpress-demo-efs"
+    creation_token = "efs-${var.buen}-${var.environment}-${var.application}"
 
     tags = {
-        Name = "wordpress-content"
+        Name = "efs-${var.buen}-${var.environment}-${var.application}"
     }
 }
 

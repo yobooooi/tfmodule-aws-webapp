@@ -1,12 +1,12 @@
 resource "aws_lb_target_group" "wordpress-tg" {
-    name     = "wordpress-target-group"
+    name     = "alb-tg-${var.buen}-${var.environment}-${var.application}"
     port     = 80
     protocol = "HTTP"
     vpc_id   = "${var.vpc_id}"
 }
 
 resource "aws_lb" "wordpress-demo" {
-    name                       = "wordpress-demo"
+    name                       = "alb-${var.buen}-${var.environment}-${var.application}"
     internal                   = false
     load_balancer_type         = "application"
     security_groups            = ["${aws_security_group.app_server.id}"]

@@ -21,7 +21,7 @@ resource "aws_launch_configuration" "wordpress_ec2" {
 }
 
 resource "aws_autoscaling_group" "wordpress_ec2_autoscaling_group" {
-    name                 = "wordpress ec2 autoscaling group"
+    name                 = "asg-${var.buen}-${var.environment}-${var.application}"
     max_size             = "2"
     min_size             = "1"
     desired_capacity     = "1"
@@ -29,6 +29,13 @@ resource "aws_autoscaling_group" "wordpress_ec2_autoscaling_group" {
     launch_configuration = "${aws_launch_configuration.wordpress_ec2.name}"
     health_check_type    = "EC2"
     target_group_arns    = ["${aws_lb_target_group.wordpress-tg.arn}"]
+
+    tag {
+        key                 = "Name"
+        value               = "asg-ec2-${var.buen}-${var.environment}-${var.application}"
+        propagate_at_launch = true
+    }
+
 }
 
 
