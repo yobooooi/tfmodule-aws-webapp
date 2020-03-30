@@ -1,5 +1,5 @@
 resource "aws_security_group" "app_server" {
-    name = "wordpess_webserver"
+    name = "sgrp-${var.buen}-${var.environment}-${var.application}"
     description = "Allow incoming HTTP connections."
     vpc_id = "${var.vpc_id}"
 
@@ -44,5 +44,28 @@ resource "aws_security_group" "app_server" {
         to_port = 3306
         protocol = "tcp"
         cidr_blocks = ["0.0.0.0/0"]
+    }
+}
+
+
+resource "aws_security_group" "rds_sg" {
+    name        = "sgrp-db-${var.buen}-${var.environment}-${var.application}"
+    description = "security group for wordpress RDS"
+    vpc_id      = "${var.vpc_id}"
+
+    ingress {
+        description = "ingress from app sg"
+        from_port   = 3306
+        to_port     = 3306
+        protocol    = "tcp"
+        cidr_blocks = ["0.0.0.0/0"]
+    }
+
+    egress {
+        description = "egress to admin cidrs"
+        from_port   = 3306
+        to_port     = 3306
+        protocol    = "tcp"
+        cidr_blocks = ["0.0.0.0/0"] 
     }
 }

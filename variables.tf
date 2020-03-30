@@ -21,5 +21,40 @@ variable "ec2_ami" {
 
 variable "key_name" {
     description = ""
-    default     = "wordpress-ec2" 
+    default     = "wordpress-poc-ec2" 
+}
+
+variable "buen" {
+    description = ""
+}
+
+variable "environment" {
+    description = ""
+}
+
+variable "application" {
+    description = ""
+}
+
+variable "family" {
+}
+
+variable "cluster_family" {
+}
+
+variable "db_family" {
+}
+
+variable "db_port" {
+}
+
+variable "engine" {
+}
+
+variable "engine_version" {
+}
+variable "db_instance_class" {
+}
+variable "master_username" {
+    default = "wordpressadmin"
 }

@@ -1,13 +1,30 @@
 provider "aws" {
-    region  = "us-east-2"
-    profile = "synthesis-dev"
+    region  = "eu-west-1"
+    profile = "sanlam-sb001"
 }
 
 module "wordpress" {
     source = "../"
 
-    vpc_id      = "vpc-042aef62c68ce9210"
-    app_subnet  = ["subnet-030e001711c8e3487", "subnet-0b15e812b0a8c79dd"]
-    data_subnet = ["subnet-054285ff14bfeccdf", "subnet-018597d905e936821"]
-    ec2_ami     = "ami-0e38b48473ea57778"
+    # Networking Vars
+    vpc_id                     = "vpc-0306eda6f9928750e"
+    app_subnet                 = ["subnet-0539b64619def41d1", "subnet-08a335a2d951f52b3"]
+    data_subnet                = ["subnet-08a335a2d951f52b3", "subnet-09527f39c4ff0b8cb"]
+    
+    # Application Server Vars
+    ec2_ami                    = "ami-04d5cc9b88f9d1d39"
+
+    # Database Vars
+    family                     = "aurora-mysql5.7"
+    db_family                  = "aurora-mysql5.7"
+    db_port                    = 3306
+    cluster_family             = "aurora-mysql5.7"
+    engine                     = "aurora-mysql"
+    engine_version             = "5.7.mysql_aurora.2.03.2"
+    db_instance_class          = "db.t3.medium"
+
+    # Business Vars
+    environment                = "poc"
+    buen                       = "sgti"
+    application                = "wordpress"
 }
