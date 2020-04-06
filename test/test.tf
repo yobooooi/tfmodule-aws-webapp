@@ -12,8 +12,9 @@ module "wordpress" {
     data_subnet                = ["subnet-08a335a2d951f52b3", "subnet-09527f39c4ff0b8cb"]
     
     # Application Server Vars
-    ec2_ami                    = "ami-04d5cc9b88f9d1d39"
-
+    ec2_instance_type          = "t3.medium"
+    s3-deployment_bucket_arn   = "arn:aws:s3:::wordpress-deployment-bucket"
+    
     # Database Vars
     family                     = "aurora-mysql5.7"
     db_family                  = "aurora-mysql5.7"
@@ -27,4 +28,6 @@ module "wordpress" {
     environment                = "poc"
     buen                       = "sgti"
     application                = "wordpress"
+
+    # Load Balancer Vars
 }
