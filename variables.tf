@@ -15,8 +15,9 @@ variable "data_subnet" {
     description = ""
 }
 
-variable "ec2_ami" {
+variable "root_block_device" {
     description = ""
+    default     = "25"
 }
 
 variable "key_name" {
@@ -58,3 +59,7 @@ variable "db_instance_class" {
 variable "master_username" {
     default = "wordpressadmin"
 }
+
+variable "s3-deployment_bucket_arn" {
+}
+
