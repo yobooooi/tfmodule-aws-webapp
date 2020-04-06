@@ -1,16 +1,9 @@
 #!/bin/bash
 
-sudo yum -y update
-sudo yum -y clean all
+sudo mkdir -p /data/www/html/rwsanlam
 
-sudo yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-sudo yum -y install http://rpms.remirepo.net/enterprise/remi-release-7.rpm
-sudo yum -y install yum-utils
-sudo yum-config-manager --enable remi-php56
+aws s3api get-object --bucket wordpress-deployment-bucket --key rwsanlam.zip /data/www/html/rwsanlam/rwsanlam.zip
+unzip /data/www/html/rwsanlam/rwsanlam.zip -d /data/www/html/rwsanlam/ 
 
-sudo yum -y install httpd php php-mysql php-gd openssl psmisc tar
-sudo yum -y install amazon-efs-utils
-sudo yum -y clean all
-
-sudo systemctl start httpd
-sudo systemctl enable httpd
+aws s3api get-object --bucket wordpress-deployment-bucket --key config/httpd.conf /etc/httpd/conf/httpd.conf
+systemctl restart httpd
