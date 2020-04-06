@@ -17,3 +17,12 @@ data "template_file" "efs_mount_permissions_policy" {
         efs_arn = "${aws_efs_file_system.wordpress-demo-efs.arn}"
     }
 }
+
+data "template_file" "s3_permissions_policy" { 
+
+    template = "${file("${path.module}/policies/s3_policy.json")}"
+
+    vars = {
+        s3_arn = "${var.s3-deployment_bucket_arn}"
+    }
+}
