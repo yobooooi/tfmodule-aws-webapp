@@ -1,12 +1,12 @@
 resource "aws_launch_configuration" "wordpress_ec2" {
-    image_id             = "${var.ec2_ami}"
+    image_id             = "${data.aws_ami.wordpress-image.id}"
     instance_type        = "${var.ec2_instance_type}"
     iam_instance_profile = "${aws_iam_instance_profile.ec2_instance_profile.id}"
     key_name             = "${var.key_name}"
 
     root_block_device {
         volume_type           = "standard"
-        volume_size           = 25
+        volume_size           = "${var.root_block_device}"
         delete_on_termination = true
     }
 
@@ -38,8 +38,21 @@ resource "aws_autoscaling_group" "wordpress_ec2_autoscaling_group" {
 
 }
 
-
 data "template_file" "wordpress_ec2_launch_configuration_userdata" {
     template = "${file("${path.module}/scripts/userdata.sh")}"
 
+}
+
+data "aws_ami" "wordpress-image" {
+    most_recent = true
+    owners = ["777120396959"]
+    
+    filter {
+        name   = "tag:Name"
+        values = ["dev-wordpress-latest-AMZN-baseimage-*"]
+    }
+    filter {
+        name   = "tag:Build_By"
+        values = ["Packer"]
+    }
 }
