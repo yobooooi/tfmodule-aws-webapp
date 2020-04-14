@@ -63,3 +63,5 @@ variable "master_username" {
 variable "s3-deployment_bucket_arn" {
 }
 
+variable "site_name" {
+}

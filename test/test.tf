@@ -28,6 +28,7 @@ module "wordpress" {
     environment                = "poc"
     buen                       = "sgti"
     application                = "wordpress"
+    site_name                  = "rwsanlam"
 
     # Load Balancer Vars
 }
