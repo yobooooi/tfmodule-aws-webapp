@@ -40,7 +40,11 @@ resource "aws_autoscaling_group" "wordpress_ec2_autoscaling_group" {
 
 data "template_file" "wordpress_ec2_launch_configuration_userdata" {
     template = "${file("${path.module}/scripts/userdata.sh")}"
-
+    
+    vars = {
+        site_name    = "${var.site_name}"
+        efs_dns_name = "${aws_efs_file_system.wordpress-demo-efs.dns_name}"
+    }
 }
 
 data "aws_ami" "wordpress-image" {
