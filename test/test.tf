@@ -1,19 +1,19 @@
 provider "aws" {
     region  = "eu-west-1"
-    profile = "sanlam-sb001"
+    profile = "sanlam-sb004"
 }
 
 module "wordpress" {
     source = "../"
 
     # Networking Vars
-    vpc_id                     = "vpc-0306eda6f9928750e"
-    app_subnet                 = ["subnet-0539b64619def41d1", "subnet-08a335a2d951f52b3"]
-    data_subnet                = ["subnet-08a335a2d951f52b3", "subnet-09527f39c4ff0b8cb"]
+    vpc_id                     = "vpc-000635fd1f3740847"
+    app_subnet                 = ["subnet-0401fc7c92842fb29", "subnet-0c98250e5021cc00c"]
+    data_subnet                = ["subnet-0401fc7c92842fb29", "subnet-0c98250e5021cc00c"]
     
     # Application Server Vars
     ec2_instance_type          = "t3.medium"
-    s3-deployment_bucket_arn   = "arn:aws:s3:::wordpress-deployment-bucket"
+    s3-deployment_bucket_arn   = "arn:aws:s3:::s3-sgti-sbx-sgti-st-sb004-deployment"
     
     # Database Vars
     family                     = "aurora-mysql5.7"

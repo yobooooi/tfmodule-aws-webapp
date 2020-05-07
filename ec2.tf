@@ -2,7 +2,6 @@ resource "aws_launch_configuration" "wordpress_ec2" {
     image_id             = "${data.aws_ami.wordpress-image.id}"
     instance_type        = "${var.ec2_instance_type}"
     iam_instance_profile = "${aws_iam_instance_profile.ec2_instance_profile.id}"
-    key_name             = "${var.key_name}"
 
     root_block_device {
         volume_type           = "standard"
@@ -50,13 +49,9 @@ data "template_file" "wordpress_ec2_launch_configuration_userdata" {
 data "aws_ami" "wordpress-image" {
     most_recent = true
     owners = ["777120396959"]
-    
+    #TODO: improve filter to search AMIs
     filter {
         name   = "tag:Name"
-        values = ["dev-wordpress-latest-AMZN-baseimage-*"]
-    }
-    filter {
-        name   = "tag:Build_By"
-        values = ["Packer"]
+        values = ["dev-wordpress-latest-AMZN-*"]
     }
 }
