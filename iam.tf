@@ -29,3 +29,8 @@ resource "aws_iam_role_policy_attachment" "attach-s3-policy" {
     role       = "${aws_iam_role.ec2_instance_role.name}"
     policy_arn = "${aws_iam_policy.s3_deployment_bucket_policy.arn}"
 }
+
+resource "aws_iam_role_policy_attachment" "ssm-policy" {
+    role       = "${aws_iam_role.ec2_instance_role.name}"
+    policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+}
