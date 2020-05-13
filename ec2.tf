@@ -2,7 +2,6 @@ resource "aws_launch_configuration" "wordpress_ec2" {
     image_id             = "${data.aws_ami.wordpress-image.id}"
     instance_type        = "${var.ec2_instance_type}"
     iam_instance_profile = "${aws_iam_instance_profile.ec2_instance_profile.id}"
-    key_name             = "${var.key_name}"
 
     root_block_device {
         volume_type           = "standard"
@@ -42,8 +41,7 @@ data "template_file" "wordpress_ec2_launch_configuration_userdata" {
     template = "${file("${path.module}/scripts/userdata.sh")}"
     
     vars = {
-        site_name    = "${var.site_name}"
-        efs_dns_name = "${aws_efs_file_system.wordpress-demo-efs.dns_name}"
+        efs_id     = "${aws_efs_file_system.wordpress-demo-efs.id}"
     }
 }
 
