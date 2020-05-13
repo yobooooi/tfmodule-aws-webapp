@@ -1,3 +1,12 @@
+terraform {
+  backend "s3" {
+    bucket = "sb001-tf-state-bucket"
+    key    = "wordpress-poc"
+    region = "eu-west-1"
+    profile = "sanlam-sb001"
+  }
+}
+
 provider "aws" {
     region  = "eu-west-1"
     profile = "sanlam-sb001"
