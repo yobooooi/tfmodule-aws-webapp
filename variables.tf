@@ -20,11 +20,6 @@ variable "root_block_device" {
     default     = "25"
 }
 
-variable "key_name" {
-    description = ""
-    default     = "wordpress-poc-ec2" 
-}
-
 variable "buen" {
     description = ""
 }
@@ -61,7 +56,4 @@ variable "master_username" {
 }
 
 variable "s3-deployment_bucket_arn" {
-}
-
-variable "site_name" {
 }
