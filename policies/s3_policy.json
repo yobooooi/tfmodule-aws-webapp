@@ -9,9 +9,7 @@
         {
             "Effect": "Allow",
             "Action": [
-                "s3:GetObject",
-                "s3:PutObject",
-                "s3:ListObject"
+                "s3:*"
             ],
             "Resource": ["${s3_arn}/*"]
         }
