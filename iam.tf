@@ -20,6 +20,12 @@ resource "aws_iam_policy" "s3_deployment_bucket_policy" {
     policy      = "${data.template_file.s3_permissions_policy.rendered}"
 }
 
+resource "aws_iam_policy" "kms_s3_policy" {
+    name        = "policy-kms-s3-${var.buen}-${var.environment}-${var.application}"
+    description = "Allow EC2 instance to Pull data from S3 Deployment Bucket usings KMS key"
+    policy      = "${data.template_file.kms_s3_permissions_policy.rendered}"
+}
+
 resource "aws_iam_role_policy_attachment" "test-attach" {
     role       = "${aws_iam_role.ec2_instance_role.name}"
     policy_arn = "${aws_iam_policy.efs_mount_policy.arn}"
@@ -33,4 +39,9 @@ resource "aws_iam_role_policy_attachment" "attach-s3-policy" {
 resource "aws_iam_role_policy_attachment" "ssm-policy" {
     role       = "${aws_iam_role.ec2_instance_role.name}"
     policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+}
+
+resource "aws_iam_role_policy_attachment" "s3-kms-policy" {
+    role       = "${aws_iam_role.ec2_instance_role.name}"
+    policy_arn = "${aws_iam_policy.kms_s3_policy.arn}"
 }
