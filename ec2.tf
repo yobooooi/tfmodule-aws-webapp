@@ -51,8 +51,7 @@ resource "aws_autoscaling_group" "wordpress_ec2_autoscaling_group" {
 # using a template resource to create the userdata used to launch the ec2 instances in the 
 # launch configuration. Note that the launch configuration isn't named, terraform will manage this 
 # on our behalf, so when destroying or replacing there are no conflicts or duplicate resources
-# 
-# TODO: add entry in fstab to make sure that the EFS share is mounted on startup
+# TODO: add entry in fstab to make sure that the EFS share is mounted on boot
 data "template_file" "wordpress_ec2_launch_configuration_userdata" {
     template = "${file("${path.module}/scripts/userdata.sh")}"
     
@@ -72,9 +71,5 @@ data "aws_ami" "wordpress-image" {
     filter {
         name   = "tag:Name"
         values = ["dev-wordpress-latest-AMZN-baseimage-*"]
-    }
-    filter {
-        name   = "tag:Build_By"
-        values = ["Packer"]
     }
 }
