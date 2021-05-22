@@ -28,3 +28,10 @@ resource "aws_lb_listener" "alb-listener" {
         target_group_arn = "${aws_lb_target_group.wordpress-tg.arn}"
     }
 }
+
+# code to attach autoscaling group to an existing application load balancer 
+#
+# resource "aws_autoscaling_attachment" "main" {
+#   autoscaling_group_name = "${aws_autoscaling_group.wordpress_ec2_autoscaling_group.id}"
+#   alb_target_group_arn   = "arn:aws:elasticloadbalancing:eu-west-1:872120996826:targetgroup/tf-20200423080001650700000001/afa74b3eb548fa3e"
+# }
