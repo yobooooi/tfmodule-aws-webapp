@@ -49,6 +49,6 @@ data "aws_ami" "webapp_ami" {
     
     filter {
         name   = "tag:codebuild_id"
-        values = ["codebuild-enveldemo-wordpress-ami-pipeline:52c33490-eb27-4eee-9c57-57c135609cca"]
+        values = ["codebuild-enveldemo-wordpress-ami-pipeline:*"]
     }
 }
