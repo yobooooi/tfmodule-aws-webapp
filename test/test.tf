@@ -1,40 +1,50 @@
 terraform {
   backend "s3" {
-    bucket = "sb001-tf-state-bucket"
-    key    = "wordpress-poc"
-    region = "eu-west-1"
-    profile = "sanlam-sb001"
+    bucket  = "enveldemo-tfstate"
+    key     = "webapp"
+    region  = "eu-west-1"
+    profile = "internal-dev"
+  }
+}
+provider "aws" {
+  region  = "eu-west-1"
+  profile = "internal-dev"
+  default_tags {
+    tags = {
+      "Environment"       = "Development"
+      "Owner"             = "Adan"
+      "Project"           = "EnvelDemo"
+      "Terraform_Managed" = "True"
+    }
   }
 }
 
-provider "aws" {
-    region  = "eu-west-1"
-    profile = "sanlam-sb001"
+module "webapp" {
+  source = "../"
+
+  vpc_id            = "vpc-04f99e5833c3a909b"
+  app_subnet        = ["subnet-0e3c6194859275f16", "subnet-04e5b9adfdcabcdaf"]
+  data_subnet       = ["subnet-02a3c9740982cc1bb", "subnet-0ea2c57df4538b887"]
+  ec2_instance_type = "t3.medium"
+  family            = "aurora-mysql5.7"
+  db_family         = "aurora-mysql5.7"
+  db_port           = 3306
+  cluster_family    = "aurora-mysql5.7"
+  engine            = "aurora-mysql"
+  engine_version    = "5.7.mysql_aurora.2.03.2"
+  db_instance_class = "db.t3.medium"
+  application       = "EnvelDemo"
 }
 
-module "wordpress" {
-    source = "../"
-
-    # Networking Vars
-    vpc_id                     = "vpc-0306eda6f9928750e"
-    app_subnet                 = ["subnet-0539b64619def41d1", "subnet-08a335a2d951f52b3"]
-    data_subnet                = ["subnet-08a335a2d951f52b3", "subnet-09527f39c4ff0b8cb"]
-    
-    # Application Server Vars
-    ec2_instance_type          = "t3.medium"
-    s3-deployment_bucket_arn   = "arn:aws:s3:::wordpress-deployment-bucket"
-    
-    # Database Vars
-    family                     = "aurora-mysql5.7"
-    db_family                  = "aurora-mysql5.7"
-    db_port                    = 3306
-    cluster_family             = "aurora-mysql5.7"
-    engine                     = "aurora-mysql"
-    engine_version             = "5.7.mysql_aurora.2.03.2"
-    db_instance_class          = "db.t3.medium"
-
-    # Business Vars
-    environment                = "poc"
-    buen                       = "sgti"
-    application                = "wordpress"
+output "launch_configuration_id" {
+  value = module.webapp.launch_configuration_id
+}
+output "autoscaling_group_id" {
+  value = module.webapp.autoscaling_group_id
+}
+output "aws_ami_id" {
+  value = module.webapp.aws_ami_id
+}
+output "aws_ami_name" {
+  value = module.webapp.aws_ami_name
 }
