@@ -1,8 +1,3 @@
-#
-# the launch configuration for the ec2 instance. this is where your instance condiguration is created
-# i.e. security groups, instance type, AMI, userdata etc.
-# FIXME: launch without public IP
-
 resource "aws_launch_configuration" "webapp_launchconf" {
     image_id             = data.aws_ami.webapp_ami.id
     instance_type        = var.ec2_instance_type
@@ -34,7 +29,9 @@ resource "aws_autoscaling_group" "webapp_asg" {
     health_check_type    = "EC2"
     target_group_arns    = [aws_lb_target_group.webapp_tg.arn]
 
-    # tags used to launch the ec2 instance with
+    instance_refresh {
+        strategy = "Rolling"
+    }
     tag {
         key                 = "Name"
         value               = "asg-ec2-${var.application}"
@@ -52,6 +49,6 @@ data "aws_ami" "webapp_ami" {
     
     filter {
         name   = "tag:codebuild_id"
-        values = ["codebuild-enveldemo-wordpress-ami-pipeline:*"]
+        values = ["codebuild-enveldemo-wordpress-ami-pipeline:52c33490-eb27-4eee-9c57-57c135609cca"]
     }
 }
