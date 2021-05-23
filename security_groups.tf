@@ -3,10 +3,10 @@
 # 80 - HTTP connection, 443 - HTTPS connection, 22 - SSH, 2049 - EFS, 3306 - SQL
 # FIXME: Remove the [0.0.0.0/0] CIDR blocks and limit to the CIDRS of the subnets
 #
-resource "aws_security_group" "app_server" {
-    name = "sgrp-${var.buen}-${var.environment}-${var.application}"
+resource "aws_security_group" "webapp_sgrp" {
+    name = "sgrp-${var.application}"
     description = "Allow incoming HTTP connections."
-    vpc_id = "${var.vpc_id}"
+    vpc_id = var.vpc_id
 
     ingress {
         from_port = 8
@@ -51,12 +51,10 @@ resource "aws_security_group" "app_server" {
         cidr_blocks = ["0.0.0.0/0"]
     }
 }
-
-# FIXME: Remove the [0.0.0.0/0] CIDR blocks and limit to the CIDRS of the subnets
-resource "aws_security_group" "rds_sg" {
-    name        = "sgrp-db-${var.buen}-${var.environment}-${var.application}"
+resource "aws_security_group" "webapp_db_sgrp" {
+    name        = "sgrp-db-${var.application}"
     description = "security group for wordpress RDS"
-    vpc_id      = "${var.vpc_id}"
+    vpc_id      = var.vpc_id
 
     ingress {
         description = "ingress from app sg"

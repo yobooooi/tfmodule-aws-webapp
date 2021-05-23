@@ -21,16 +21,6 @@ variable "root_block_device" {
 }
 
 #FIXME: use the tagging and naming module
-variable "buen" {
-    description = "Tags taken from the Sanlam Standards Document"
-}
-
-#FIXME: use the tagging and naming module
-variable "environment" {
-    description = "Tags taken from the Sanlam Standards Document"
-}
-
-#FIXME: use the tagging and naming module
 variable "application" {
     description = "Tags taken from the Sanlam Standards Document"
 }
@@ -63,9 +53,5 @@ variable "db_instance_class" {
 }
 #TODO: make use of SSM Parameter store or something more secure
 variable "master_username" {
-    default = "wordpressadmin"
-}
-
-variable "s3-deployment_bucket_arn" {
-    description = "ARN of the S3 bucket used for Deployment"
+    default = "webapp"
 }
